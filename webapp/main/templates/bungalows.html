@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Bungalowpagina{% endblock %}
+{% block main %}
+
+<h1 class="text-center mb-4">Bungalowoverzicht</h1>
+<div class="row">
+
+  {% for bungalow in bungalows %}
+  <div class="col-lg-3 mb-4">
+    <div class="card">
+      <img src="{{ bungalow.image }}" class="card-img-top" alt="{{ bungalow.name }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ bungalow.name }}</h5>
+        <p class="card-text">{{ bungalow.description }}</p>
+
+        <a href="#" class="btn btn-primary" id="bungalow{{ bungalow.id }}ModalBtn" data-bs-toggle="modal" data-bs-target="#bungalowModal{{ bungalow.id }}">Meer Informatie</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="bungalowModal{{ bungalow.id }}" tabindex="-1" aria-labelledby="bungalowModal{{ bungalow.id }}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> 
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="bungalowModal{{ bungalow.id }}Label">{{ bungalow.name }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <img src="{{ bungalow.image }}" class="img-fluid mb-3" alt="{{ bungalow.name }}" style="max-width: 100%;">
+
+          <p>{{ bungalow.description }}</p>
+
+          <a href="{{ url_for('book_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-success">Boeken</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %} {% block main%}
+
+<div class="container mt-5">
+  <h1>Over ons</h1>
+  <p>
+    Welkom bij Bungalowpark, uw ideale bestemming voor een ontspannen vakantie
+    midden in de natuur. Ons park biedt comfortabele accommodaties, een scala
+    aan voorzieningen en een prachtige omgeving om te verkennen.
+  </p>
+  <p>
+    Bij Bungalowpark streven we ernaar om uw verblijf zo aangenaam mogelijk te
+    maken. Of u nu wilt ontspannen bij het zwembad, genieten van outdoor
+    activiteiten of gewoon tot rust komen in uw eigen bungalow, wij hebben voor
+    elk wat wils.
+  </p>
+  <p>
+    Onze medewerkers staan altijd klaar om u te helpen met vragen en
+    aanbevelingen, zodat u optimaal kunt genieten van uw verblijf. We kijken
+    ernaar uit om u te verwelkomen bij Bungalowpark en u een onvergetelijke
+    vakantie-ervaring te bezorgen.
+  </p>
+</div>
+<div id="contact" class="container mt-5">
+  <h2>Contact</h2>
+  <p>Vul het onderstaande formulier in om contact met ons op te nemen.</p>
+  <form>
+    <div class="mb-3">
+      <label for="name" class="form-label">Naam</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="Voer uw naam in"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">E-mailadres</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="Voer uw e-mailadres in"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Bericht</label>
+      <textarea
+        class="form-control"
+        id="message"
+        rows="4"
+        placeholder="Voer uw bericht in"
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Verzenden</button>
+  </form>
+</div>
+
+{% endblock%}
