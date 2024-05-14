@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-
+from werkzeug.security import generate_password_hash, check_password_hash
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -14,6 +14,6 @@ class InfoForm(FlaskForm):
     email = StringField(
         "email: ", validators=[DataRequired(), Email(message="email is niet geldig")]
     )
-    wachtwoord = StringField("wachtwoord: ", validators=[DataRequired()])
+    wachtwoord = PasswordField("wachtwoord: ", validators=[DataRequired()])
     submit = SubmitField("Submit")
 

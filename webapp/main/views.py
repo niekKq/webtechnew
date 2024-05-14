@@ -1,7 +1,7 @@
 import bcrypt
 from flask import Blueprint, flash, redirect, render_template, url_for
 import os
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, login_user
 
 from webapp.main.forms import InfoForm, RegistrationForm
 
@@ -36,36 +36,63 @@ def bungalows():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        return redirect(url_for('main.login'))
-    return render_template('register.html', title='Register', form=form)
+        print("Formulier gevalideerd")
+
+        # Controleren of de gebruiker al bestaat
+        existing_user = User.query.filter_by(email=form.email.data).first()
+        if existing_user:
+            flash('Dit e-mailadres is al geregistreerd. Probeer een ander e-mailadres.', 'danger')
+            print("Gebruiker bestaat al")
+            return redirect(url_for('main.register'))
+        else:
+            print("Nieuwe gebruiker wordt aangemaakt")
+            # Wachtwoord niet hashen
+            # hashed_password = generate_password_hash(form.password.data)
+            print("Wachtwoord niet gehasht")
+            user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            print("Gebruiker toegevoegd aan database")
+            flash('Je account is aangemaakt! Je kunt nu inloggen.', 'success')
+            return redirect(url_for('main.login'))
+    return render_template('register.html', title='Registreren', form=form)
+
 
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
     form = InfoForm()
     if form.validate_on_submit():
-        # Haal gebruikersinformatie op uit het formulier
+        print("Formulier is correct gevalideerd")
         username = form.naam.data
         password = form.wachtwoord.data
 
-        # Zoek de gebruiker in de database
+        # Zoek de gebruiker in de database op basis van de gebruikersnaam
         user = User.query.filter_by(username=username).first()
 
-        # Controleer of de gebruiker bestaat en of het wachtwoord overeenkomt
-        if user and user.check_password(password):
-            # Log de gebruiker in
-            flash('Login succesvol!', 'success')
-            # Hier kun je bijvoorbeeld de gebruiker inloggen met Flask-Login
-            # login_user(user)
-            return redirect(url_for('main.home'))
-        else:
-            # Geef een foutmelding weer als de inloggegevens onjuist zijn
-            flash('Onjuiste gebruikersnaam of wachtwoord. Probeer het opnieuw.', 'danger')
+        # Controleer of de gebruiker bestaat
+        if user:
+            print("Gebruiker gevonden:", user)
 
-    # Laad de login-pagina
+            # Controleer of het ingevoerde wachtwoord overeenkomt met het opgeslagen wachtwoord
+            if user.password == password:
+                print("Wachtwoord correct")
+
+                # Log de gebruiker in
+                login_user(user)
+                flash('Login succesvol!', 'success')
+                return redirect(url_for('main.home'))
+            else:
+                print("Onjuist wachtwoord")
+                flash('Onjuiste wachtwoord. Probeer het opnieuw.', 'danger')
+        else:
+            print("Gebruiker niet gevonden")
+            flash('Gebruiker niet gevonden. Probeer het opnieuw.', 'danger')
+
     return render_template("login.html", form=form)
+
+
+
+
+
+
