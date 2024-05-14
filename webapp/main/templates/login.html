@@ -1,44 +1,39 @@
 {% extends "base.html" %}
 {% block main %}
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                    {% if category == 'info' %}
+                        <a href="{{ url_for('main.register') }}" class="alert-link">Nog geen account? Registreer hier.</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
 <div class="container achtergrond">
     <form method="post">
         {{ form.hidden_tag() }}
         <div class="row mb-3">
-            <label for="email_md" class="col-sm-2 col-form-label col-form-label-md">naam: </label>
+            <label for="naam" class="col-sm-2 col-form-label col-form-label-md">Naam: </label>
             <div class="col-sm-10">
-                {{ form.naam(class="form-control form-control-sm", id="email_sm", placeholder="voer je naam in") }}
+                {{ form.naam(class="form-control form-control-sm", id="naam", placeholder="Voer je naam in") }}
             </div>
         </div>
         <div class="row mb-3">
-            <label for="email_md" class="col-sm-2 col-form-label-md">Email: </label>
+            <label for="wachtwoord" class="col-sm-2 col-form-label-md">Wachtwoord: </label>
             <div class="col-sm-10">
-                {{ form.email(class="form-control", id="email_md", placeholder="voer je email in") }}
+                {{ form.wachtwoord(class="form-control", id="wachtwoord", placeholder="Voer je wachtwoord in", type="password") }}
             </div>
         </div>
-        <div class="row">
-            <label for="email_md" class="col-sm-2 col-form-label col-form-label-md">wachtwoord: </label>
-            <div class="col-sm-10">
-                {{ form.wachtwoord(class="form-control form-control-md", id="email_lg", placeholder="voer je wachtwoord in", type="password") }}
-            </div>
-        </div>
-        <br>
         <div class="row">
             <div class="col-sm-10 offset-sm-2">
                 {{ form.submit(class="btn btn-primary") }}
             </div>
         </div>
     </form>
-
-    {% if naam %}
-    <h1>Welcome {{ naam }}</h1>
-    <p>Email: {{ email }}</p>
-    <br>
-    {% else %}
-    <h1>Welcome, please log in</h1>
-    {% endif %}
-    </div>
-
 </div>
-
 {% endblock %}

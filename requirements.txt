@@ -5,3 +5,4 @@ Flask-Bcrypt
 Flask-Login
 Werkzeug
 Flask-Bcrypt
+email_validator
