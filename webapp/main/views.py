@@ -1,5 +1,5 @@
 import bcrypt
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, get_flashed_messages, redirect, render_template, session, url_for
 import os
 from flask_login import current_user, login_required, login_user, logout_user
 
@@ -101,5 +101,5 @@ def login():
         else:
             print("Gebruiker niet gevonden")
             flash("Gebruiker niet gevonden. Probeer het opnieuw.", "danger")
-
+    session['_flashes'].clear()
     return render_template("login.html", form=form)
