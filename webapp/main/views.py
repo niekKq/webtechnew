@@ -1,7 +1,7 @@
 import bcrypt
 from flask import Blueprint, flash, redirect, render_template, url_for
 import os
-from flask_login import current_user, login_required, login_user
+from flask_login import current_user, login_required, login_user, logout_user
 
 from webapp.main.forms import LoginForm, RegistrationForm, InfoForm
 
@@ -18,11 +18,15 @@ main = Blueprint(
 
 @main.route("/")
 def home():
+    if not current_user.is_authenticated:
+        return redirect(url_for("main.login"))
     return render_template("home.html")
 
 
 @main.route("/about")
 def about():
+    if not current_user.is_authenticated:
+        return redirect(url_for("main.login"))
     return render_template("about.html")
 
 
@@ -31,6 +35,12 @@ def bungalows():
     if not current_user.is_authenticated:
         return redirect(url_for("main.login"))
     return render_template("bungalows.html")
+
+
+@main.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("main.home"))
 
 
 @main.route("/register", methods=["GET", "POST"])
