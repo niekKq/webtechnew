@@ -1,23 +1,37 @@
-{% extends "base.html" %} {% block title %} {% endblock %} {% block main %}
+{% extends "base.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block main %}
 <h1>Login</h1>
+
 <div class="container mt-5">
   <div class="row mb-3">
     <form method="post" class="col-sm-12 col-md-6 offset-md-3">
       {{ form.hidden_tag() }}
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endwith %}
       <div class="row mb-3">
         <label for="naam" class="col-sm-2 col-form-label-md">Naam: </label>
         <div class="col-sm-10">
-          {{ form.naam(class="form-control", id="naam", placeholder="Voer je
-          naam in") }}
+          {{ form.naam(class="form-control", id="naam", placeholder="Voer je naam in") }}
         </div>
       </div>
       <div class="row mb-3">
-        <label for="wachtwoord" class="col-sm-2 col-form-label-md"
-          >Wachtwoord:</label
-        >
+        <label for="wachtwoord" class="col-sm-2 col-form-label-md">Wachtwoord:</label>
         <div class="col-sm-10">
-          {{ form.wachtwoord(class="form-control", id="wachtwoord",
-          placeholder="Voer je wachtwoord in", type="password") }}
+          {{ form.wachtwoord(class="form-control", id="wachtwoord", placeholder="Voer je wachtwoord in", type="password") }}
         </div>
       </div>
       <div class="row">
@@ -32,9 +46,7 @@
     <div class="col-sm-10 offset-sm-2">
       <p>
         Nog geen gebruiker?
-        <a href="{{ url_for('main.register') }}"
-          >Klik hier om te registreren!</a
-        >
+        <a href="{{ url_for('main.register') }}">Klik hier om te registreren!</a>
       </p>
     </div>
   </div>

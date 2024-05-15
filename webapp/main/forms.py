@@ -1,3 +1,4 @@
+from typing import Optional
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -29,3 +30,10 @@ class InfoForm(FlaskForm):
     )
     wachtwoord = PasswordField("wachtwoord: ", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+class AccountForm(FlaskForm):
+    username = StringField('Nieuwe gebruikersnaam')
+    email = StringField('Nieuw e-mailadres', validators=[Email()])
+    password = PasswordField('Nieuw wachtwoord', validators=[EqualTo('confirm_password', message='Wachtwoorden moeten overeenkomen')])
+    confirm_password = PasswordField('Bevestig nieuw wachtwoord')
+    submit = SubmitField('Opslaan')
