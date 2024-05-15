@@ -18,22 +18,16 @@ main = Blueprint(
 
 @main.route("/")
 def home():
-    if not current_user.is_authenticated:
-        return redirect(url_for("main.login"))
     return render_template("home.html")
 
 
 @main.route("/about")
 def about():
-    if not current_user.is_authenticated:
-        return redirect(url_for("main.login"))
     return render_template("about.html")
 
 
 @main.route("/bungalows")
 def bungalows():
-    if not current_user.is_authenticated:
-        return redirect(url_for("main.login"))
     return render_template("bungalows.html")
 
 
@@ -42,6 +36,8 @@ def logout():
     logout_user()
     return redirect(url_for("main.home"))
 
+
+from werkzeug.security import generate_password_hash
 
 @main.route("/register", methods=["GET", "POST"])
 def register():
@@ -60,13 +56,12 @@ def register():
             return redirect(url_for("main.register"))
         else:
             print("Nieuwe gebruiker wordt aangemaakt")
-            # Wachtwoord niet hashen
-            # hashed_password = generate_password_hash(form.password.data)
-            print("Wachtwoord niet gehasht")
+            hashed_password = generate_password_hash(form.password.data)
+            print("Wachtwoord gehasht")
             user = User(
                 username=form.username.data,
                 email=form.email.data,
-                password=form.password.data,
+                password=hashed_password,  # Hier wordt het gehashte wachtwoord toegevoegd
             )
             db.session.add(user)
             db.session.commit()
@@ -74,6 +69,7 @@ def register():
             flash("Je account is aangemaakt! Je kunt nu inloggen.", "success")
             return redirect(url_for("main.login"))
     return render_template("register.html", title="Registreren", form=form)
+
 
 
 @main.route("/login", methods=["GET", "POST"])
@@ -91,8 +87,8 @@ def login():
         if user:
             print("Gebruiker gevonden:", user)
 
-            # Controleer of het ingevoerde wachtwoord overeenkomt met het opgeslagen wachtwoord
-            if user.password == password:
+            # Controleer of het ingevoerde wachtwoord overeenkomt met het opgeslagen gehashte wachtwoord
+            if check_password_hash(user.password, password):
                 print("Wachtwoord correct")
 
                 # Log de gebruiker in
