@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-
 {% block title %}Home - Bungalowpark{% endblock %}
-
 {% block main %}
 <div class="container">
     <div class="row">
@@ -12,6 +10,11 @@
     </div>
 </div>
 <div class="container mt-5">
+    {% if Succesvol %}
+    <div class="alert alert-success" role="alert">
+        Accountgegevens zijn succesvol bijgewerkt!
+    </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-4 mb-4">
             <div class="card">

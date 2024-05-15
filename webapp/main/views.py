@@ -1,9 +1,9 @@
 import bcrypt
-from flask import Blueprint, flash, redirect, render_template, session, url_for
+from flask import Blueprint, flash, redirect, render_template, request, session, url_for
 import os
-from flask_login import login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from webapp.main.forms import LoginForm, RegistrationForm
+from webapp.main.forms import AccountForm, LoginForm, RegistrationForm
 from webapp.models import User
 from webapp import db
 from time import sleep
@@ -13,22 +13,6 @@ main = Blueprint(
     __name__,
     template_folder=os.path.join(os.path.dirname(__file__), "templates"),
 )
-
-
-@main.route("/")
-def home():
-    return render_template("home.html")
-
-
-@main.route("/about")
-def about():
-    return render_template("about.html")
-
-
-@main.route("/bungalows")
-def bungalows():
-    return render_template("bungalows.html")
-
 
 @main.route("/logout")
 def logout():
@@ -70,5 +54,48 @@ def login():
             return redirect(url_for("main.home"))
         else:
             flash("Onjuiste gebruikersnaam of wachtwoord. Probeer het opnieuw.", "danger")
-            return redirect(url_for("main.login"))  # Redirect naar login pagina bij fout wachtwoord
+            return redirect(url_for("main.login"))  
     return render_template("login.html", form=form)
+
+@main.route("/account", methods=["GET", "POST"])
+@login_required
+def account():
+    Succesvol = False  
+    form = AccountForm()
+    if form.validate_on_submit():
+        if form.password.data != form.confirm_password.data:
+            flash("Het nieuwe wachtwoord en de bevestiging komen niet overeen. Probeer het opnieuw.", "danger")
+            return render_template("account.html", form=form, Succesvol=Succesvol)
+        
+        if form.password.data:
+            current_user.password = generate_password_hash(form.password.data)
+            flash("Wachtwoord succesvol gewijzigd!", "success")
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash("Accountgegevens succesvol bijgewerkt!", "success")
+        Succesvol = True  
+        session['Succesvol'] = True 
+        return redirect(url_for("main.home"))
+    elif request.method == "GET":
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    return render_template("account.html", form=form, Succesvol=Succesvol) 
+
+
+
+
+@main.route("/")
+def home():
+    Succesvol = session.pop('Succesvol', False) 
+    return render_template("home.html", Succesvol=Succesvol)
+
+@main.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@main.route("/bungalows")
+def bungalows():
+    return render_template("bungalows.html")
+
