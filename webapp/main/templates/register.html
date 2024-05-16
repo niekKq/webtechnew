@@ -1,40 +1,44 @@
-{% extends "base.html" %}
-{% block title %}Registreren{% endblock %}
-{% block main %}
-
-<div class="container achtergrond">
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <div class="row mb-3">
-            <label for="username" class="col-sm-2 col-form-label col-form-label-md">Gebruikersnaam: </label>
-            <div class="col-sm-10">
-                {{ form.username(class="form-control form-control-sm", id="username", placeholder="Voer je gebruikersnaam in") }}
+{% extends "base.html" %} {% block title %}Registreren{% endblock %} {% block
+main %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Registreren</div>
+        <div class="card-body">
+          <form method="post">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+              {{ form.username.label(class="form-label") }} {{
+              form.username(class="form-control") }}
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="email" class="col-sm-2 col-form-label-md">E-mail: </label>
-            <div class="col-sm-10">
-                {{ form.email(class="form-control", id="email", placeholder="Voer je e-mailadres in") }}
+            <div class="mb-3">
+              {{ form.email.label(class="form-label") }} {{
+              form.email(class="form-control") }} {% for error in
+              form.email.errors %}
+              <small class="text-danger"
+                >Ongeldig e-mailadres. Controleer het opnieuw.</small
+              >
+              {% endfor %}
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="password" class="col-sm-2 col-form-label-md">Wachtwoord: </label>
-            <div class="col-sm-10">
-                {{ form.password(class="form-control form-control-md", id="password", placeholder="Voer je wachtwoord in", type="password") }}
+            <div class="mb-3">
+              {{ form.password.label(class="form-label") }} {{
+              form.password(class="form-control") }}
             </div>
-        </div>
-        <div class="row mb-3">
-            <label for="confirm_password" class="col-sm-2 col-form-label-md">Bevestig Wachtwoord: </label>
-            <div class="col-sm-10">
-                {{ form.confirm_password(class="form-control form-control-md", id="confirm_password", placeholder="Bevestig je wachtwoord", type="password") }}
+            <div class="mb-3">
+              {{ form.confirm_password.label(class="form-label") }} {{
+              form.confirm_password(class="form-control") }} {% for error in
+              form.confirm_password.errors %}
+              <small class="text-danger"
+                >De wachtwoorden komen niet overeen. Probeer het opnieuw.</small
+              >
+              {% endfor %}
             </div>
+            <button type="submit" class="btn btn-primary">Registreren</button>
+          </form>
         </div>
-        <div class="row">
-            <div class="col-sm-10 offset-sm-2">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-        </div>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock %}

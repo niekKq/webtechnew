@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container">
+    <h2>Bungalows</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for bungalow in bungalows %}
+        <div class="col" style="margin-bottom: 20px;">
+            <div class="card h-100">    
+                <div class="card-body">
+                    <h5 class="card-title">{{ bungalow.name }}</h5>
+                    <a href="{{ url_for('main.edit_view', bungalow_id=bungalow.id) }}" class="btn btn-primary">Bewerk</a>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ bungalow.id }}">Verwijder</button>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ bungalow.id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Weet je het zeker?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Weet je zeker dat je bungalow "{{ bungalow.name }}" wilt verwijderen?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
+                        <a href="{{ url_for('main.delete_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-danger">Verwijderen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

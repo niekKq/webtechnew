@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+
+{% block main %}
+<div class="container">
+    <h2>Bungalow bewerken</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.content.label(class="form-label") }}
+            {{ form.content(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.bungalow_type.label(class="form-label") }}
+            {{ form.bungalow_type(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.weekprice.label(class="form-label") }}
+            {{ form.weekprice(class="form-control") }}
+        </div>
+        <button type="submit" class="btn btn-primary">Opslaan</button>
+    </form>
+</div>
+{% endblock %}
+
+
