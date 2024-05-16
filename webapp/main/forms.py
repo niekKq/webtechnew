@@ -1,6 +1,6 @@
 from typing import Optional
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -36,4 +36,12 @@ class AccountForm(FlaskForm):
     email = StringField('Nieuw e-mailadres', validators=[Email()])
     password = PasswordField('Nieuw wachtwoord', validators=[EqualTo('confirm_password', message='Wachtwoorden moeten overeenkomen')])
     confirm_password = PasswordField('Bevestig nieuw wachtwoord')
+    submit = SubmitField('Opslaan')
+
+class BungalowForm(FlaskForm):
+    name = StringField('Naam', validators=[DataRequired()])
+    content = StringField('Content', validators=[DataRequired()])
+    bungalow_type = StringField('Type', validators=[DataRequired()])
+    weekprice = StringField('Prijs per week', validators=[DataRequired()])
+    image = FileField('Afbeelding', validators=[DataRequired()])
     submit = SubmitField('Opslaan')

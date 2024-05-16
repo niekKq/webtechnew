@@ -3,8 +3,8 @@ from flask import Blueprint, flash, redirect, render_template, request, session,
 import os
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from webapp.main.forms import AccountForm, LoginForm, RegistrationForm
-from webapp.models import User
+from webapp.main.forms import AccountForm, LoginForm, RegistrationForm, BungalowForm
+from webapp.models import User, Bungalow
 from webapp import db
 from time import sleep
 
@@ -94,8 +94,33 @@ def home():
 def about():
     return render_template("about.html")
 
-
 @main.route("/bungalows")
 def bungalows():
-    return render_template("bungalows.html")
+    bungalows = Bungalow.query.all()
+    print("Bungalows gevonden:", bungalows)  
+    return render_template("bungalows.html", bungalows=bungalows)
+
+@main.route("/admin", methods=["GET", "POST"])
+def admin():
+    return render_template("admin.html")
+
+
+@main.route("/admin/add_bungalow", methods=["GET", "POST"])
+def add_bungalow():
+    form = BungalowForm()
+    if form.validate_on_submit():
+        bungalow = Bungalow(name=form.name.data, content=form.content.data, bungalow_type=form.bungalow_type.data, weekprice=form.weekprice.data)
+        db.session.add(bungalow)
+        db.session.commit()
+        flash("Bungalow succesvol toegevoegd!", "success")
+        return redirect(url_for("main.admin"))
+    return render_template("add_bungalow.html", form=form)
+
+@main.route("/admin/edit_bungalow", methods=["GET", "POST"])
+def edit_bungalow():
+    bungalows = Bungalow.query.all()
+    print("Bungalows gevonden:", bungalows)
+    return render_template("edit_bungalow.html", bungalows=bungalows)
+
+
 

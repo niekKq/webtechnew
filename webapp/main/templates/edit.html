@@ -1,0 +1,31 @@
+{% extends "base.html" %} 
+{% block main %}
+    {% if current_user.is_authenticated %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="/admin/add_bungalow">
+            <button class="btn btn-primary">Voeg bungalow toe</button>
+        </a>
+        <h2>Kies een bungalow om te bewerken:</h2>
+        <ul>
+            {% for bungalow in bungalows %}
+                <li>
+                    {{ bungalow.name }}
+                    <a href="{{ url_for('edit_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-primary">Bewerk</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Jij hoort hier niet</h1>
+    {% endif %}
+{% endblock %}
