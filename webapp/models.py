@@ -36,8 +36,6 @@ class Bungalow(db.Model):
     content = db.Column(db.Text, nullable=False)
     bungalow_type = db.Column(db.Integer, nullable=False)
     weekprice = db.Column(db.Integer, nullable=False)
-    image_filename = db.Column(db.String(255), nullable=True)
-    image_url = db.Column(db.String(255), nullable=True)
 
     def __repr__(self):
         return f"Bungalow('{self.name}', '{self.bungalow_type}', '{self.weekprice}')"

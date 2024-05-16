@@ -43,5 +43,4 @@ class BungalowForm(FlaskForm):
     content = StringField('Content', validators=[DataRequired()])
     bungalow_type = StringField('Type', validators=[DataRequired()])
     weekprice = StringField('Prijs per week', validators=[DataRequired()])
-    image = FileField('Afbeelding', validators=[DataRequired()])
     submit = SubmitField('Opslaan')
