@@ -14,9 +14,9 @@ login_manager = LoginManager(app)
 login_manager.init_app(app)
 
 from webapp.main.views import main
-
+from webapp.bungalow.views import bung
 app.register_blueprint(main)
-
+app.register_blueprint(bung)
 
 @login_manager.user_loader
 def load_user(user_id):

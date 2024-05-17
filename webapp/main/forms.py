@@ -38,9 +38,4 @@ class AccountForm(FlaskForm):
     confirm_password = PasswordField('Bevestig nieuw wachtwoord')
     submit = SubmitField('Opslaan')
 
-class BungalowForm(FlaskForm):
-    name = StringField('Naam', validators=[DataRequired()])
-    content = StringField('Content', validators=[DataRequired()])
-    bungalow_type = StringField('Type', validators=[DataRequired()])
-    weekprice = StringField('Prijs per week', validators=[DataRequired()])
-    submit = SubmitField('Opslaan')
+

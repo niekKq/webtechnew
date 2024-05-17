@@ -8,7 +8,7 @@
             <div class="card h-100">    
                 <div class="card-body">
                     <h5 class="card-title">{{ bungalow.name }}</h5>
-                    <a href="{{ url_for('main.edit_view', bungalow_id=bungalow.id) }}" class="btn btn-primary">Bewerk</a>
+                    <a href="{{ url_for('bungalow.edit_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-primary">Bewerk</a>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ bungalow.id }}">Verwijder</button>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuleren</button>
-                        <a href="{{ url_for('main.delete_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-danger">Verwijderen</a>
+                        <a href="{{ url_for('bungalow.delete_bungalow', bungalow_id=bungalow.id) }}" class="btn btn-danger">Verwijderen</a>
                     </div>
                 </div>
             </div>
