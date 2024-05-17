@@ -15,6 +15,7 @@ from webapp.models import User, Bungalow
 from webapp import db
 from email_validator import validate_email, EmailNotValidError
 
+
 main = Blueprint(
     "main",
     __name__,
@@ -31,32 +32,42 @@ def logout():
     return redirect(url_for("main.home"))
 
 
-from flask import get_flashed_messages
-
-
 @main.route("/register", methods=["GET", "POST"])
 def register():
     form = RegistrationForm()
 
     if form.validate_on_submit():
+        # Check if the email already exists
         existing_user = User.query.filter_by(email=form.email.data).first()
         if existing_user:
-            flash(
-                "Dit e-mailadres is al geregistreerd. Gebruik een ander e-mailadres.",
-                "danger",
+            form.email.errors.append(
+                "Dit e-mailadres is al geregistreerd. Gebruik een ander e-mailadres."
             )
-            return redirect(url_for("main.register"))
-
-        if form.password.data != form.confirm_password.data:
-            flash("De wachtwoorden komen niet overeen.", "danger")
             return render_template("register.html", title="Registreren", form=form)
 
+        # Check if the username already exists
+        existing_username = User.query.filter_by(username=form.username.data).first()
+        if existing_username:
+            form.username.errors.append(
+                "Deze gebruikersnaam is al in gebruik. Kies een andere gebruikersnaam."
+            )
+            return render_template("register.html", title="Registreren", form=form)
+
+        # Check if passwords match
+        if form.password.data != form.confirm_password.data:
+            form.confirm_password.errors.append(
+                "De wachtwoorden komen niet overeen. Probeer het opnieuw."
+            )
+            return render_template("register.html", title="Registreren", form=form)
+
+        # Validate the email
         try:
             validate_email(form.email.data)
         except EmailNotValidError:
-            flash("Ongeldig e-mailadres", "danger")
+            form.email.errors.append("Ongeldig e-mailadres. Controleer het opnieuw.")
             return render_template("register.html", title="Registreren", form=form)
 
+        # Hash the password and create a new user
         hashed_password = generate_password_hash(form.password.data)
         user = User(
             username=form.username.data, email=form.email.data, password=hashed_password

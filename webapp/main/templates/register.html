@@ -10,15 +10,16 @@ main %}
             {{ form.hidden_tag() }}
             <div class="mb-3">
               {{ form.username.label(class="form-label") }} {{
-              form.username(class="form-control") }}
+              form.username(class="form-control") }} {% for error in
+              form.username.errors %}
+              <small class="text-danger">{{ error }}</small>
+              {% endfor %}
             </div>
             <div class="mb-3">
               {{ form.email.label(class="form-label") }} {{
               form.email(class="form-control") }} {% for error in
               form.email.errors %}
-              <small class="text-danger"
-                >Ongeldig e-mailadres. Controleer het opnieuw.</small
-              >
+              <small class="text-danger">{{ error }}</small>
               {% endfor %}
             </div>
             <div class="mb-3">
@@ -29,9 +30,7 @@ main %}
               {{ form.confirm_password.label(class="form-label") }} {{
               form.confirm_password(class="form-control") }} {% for error in
               form.confirm_password.errors %}
-              <small class="text-danger"
-                >De wachtwoorden komen niet overeen. Probeer het opnieuw.</small
-              >
+              <small class="text-danger">{{ error }}</small>
               {% endfor %}
             </div>
             <button type="submit" class="btn btn-primary">Registreren</button>
