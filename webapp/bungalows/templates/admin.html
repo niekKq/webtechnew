@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block main%}
+{% extends "base.html" %}
+{% block main%}
 {% if current_user.is_authenticated %}
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
