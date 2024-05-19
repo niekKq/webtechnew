@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField, DecimalField
 from wtforms.validators import DataRequired
 
 
 class BungalowForm(FlaskForm):
-    name = StringField("Naam", validators=[DataRequired()])
-    content = StringField("Content", validators=[DataRequired()])
-    bungalow_type = StringField("Type", validators=[DataRequired()])
-    weekprice = StringField("Prijs per week", validators=[DataRequired()])
-    submit = SubmitField("Opslaan")
+    name = StringField("Name", validators=[DataRequired()])
+    content = TextAreaField("Content", validators=[DataRequired()])
+    bungalow_type = SelectField("Type", choices=[("Type1", "Type2")])
+    weekprice = DecimalField("Week Price", validators=[DataRequired()])
+    submit = SubmitField("Add Bungalow")
