@@ -32,7 +32,7 @@
 .achtergrond {
   width: 50%;
   float: left;
-} 
+}
 
 .plaatje {
   width: 50%;
@@ -59,4 +59,31 @@
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+}
+
+.bungalow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.bungalow-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.bungalow-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.placeholder-image {
+  width: 100%;
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+  background-color: #e0e0e0;
+  border-radius: 4px;
 }

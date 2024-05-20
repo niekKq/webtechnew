@@ -1,6 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Account{% endblock %}
-{% block main %}
+{% extends "base.html" %} {% block title %}Account{% endblock %} {% block main
+%}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
@@ -9,31 +8,60 @@
         {{ form.hidden_tag() }}
         <div class="mb-3">
           <label for="username" class="form-label">Gebruikersnaam</label>
-          <input type="text" class="form-control" id="username" name="username" value="{{ current_user.username }}" readonly>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            value="{{ current_user.username }}"
+            readonly
+          />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">E-mailadres</label>
-          <input type="email" class="form-control" id="email" name="email" value="{{ current_user.email }}" readonly>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="{{ current_user.email }}"
+            readonly
+          />
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Nieuw wachtwoord</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Nieuw wachtwoord">
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Nieuw wachtwoord"
+          />
           {% if form.password.errors %}
-          <div class="text-danger">
-            {{ form.password.errors[0] }}
-          </div>
+          <div class="text-danger">{{ form.password.errors[0] }}</div>
           {% endif %}
         </div>
         <div class="mb-3">
-          <label for="confirm_password" class="form-label">Bevestig nieuw wachtwoord</label>
-          <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Bevestig nieuw wachtwoord">
+          <label for="confirm_password" class="form-label"
+            >Bevestig nieuw wachtwoord</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            id="confirm_password"
+            name="confirm_password"
+            placeholder="Bevestig nieuw wachtwoord"
+          />
           {% if form.confirm_password.errors %}
-          <div class="text-danger">
-            {{ form.confirm_password.errors[0] }}
-          </div>
+          <div class="text-danger">{{ form.confirm_password.errors[0] }}</div>
           {% endif %}
         </div>
         <button type="submit" class="btn btn-primary">Opslaan</button>
+        <a
+          href="{{ url_for('bookings.my_bookings', bungalow_id=1) }}"
+          class="btn btn-primary"
+          >Bekijk en pas boekingen aan</a
+        >
       </form>
     </div>
   </div>

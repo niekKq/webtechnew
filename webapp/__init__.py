@@ -15,9 +15,12 @@ login_manager.init_app(app)
 
 from webapp.main.views import main
 from webapp.bungalows.views import bung
+from webapp.bookings.views import bookings
 
 app.register_blueprint(main)
 app.register_blueprint(bung)
+app.register_blueprint(bookings)
+
 
 @login_manager.user_loader
 def load_user(user_id):

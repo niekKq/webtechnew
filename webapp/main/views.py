@@ -137,12 +137,5 @@ def about():
         session["_flashes"].clear()
     return render_template("about.html")
 
-@main.route("/bungalows")
-def bungalows():
-    bungalows = Bungalow.query.all()
-    print("Bungalows gevonden:", bungalows)
-    return render_template("bungalows.html", bungalows=bungalows)
-
 
 ####################################################################################
-

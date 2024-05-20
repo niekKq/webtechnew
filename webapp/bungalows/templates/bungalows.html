@@ -1,44 +1,40 @@
-{% extends "main/base.html" %} 
-{% block main %}
-
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
- <body>
-  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bungalows</title>
-</head>
-<body>
-      <h1 class="mb-4">Bungalows</h1>
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-          {% for bungalow in bungalows %}
-              <div class="col">
-                  <div class="card h-100">
-                      {% if bungalow.image_filename %}
-                          <img src="{{ url_for('static', filename='uploads/' + bungalow.image_filename) }}" class="card-img-top" alt="Bungalow Image">
-                      {% endif %}
-                      <div class="card-body">
-                          <h5 class="card-title">{{ bungalow.name }}</h5>
-                          <p class="card-text">{{ bungalow.content }}</p>
-                          <p class="card-text"><small class="text-muted">Type: {{ bungalow.bungalow_type }}</small></p>
-                          <p class="card-text"><small class="text-muted">Prijs per week: {{ bungalow.weekprice }}</small></p>
-                      </div>
-                  </div>
-              </div>
-          {% endfor %}
+{% extends "base.html" %} {% block main %}
+<h1>Alle Bungalows</h1>
+<div class="row">
+  {% for bungalow in bungalows %}
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <img
+        src="{{ url_for('static', filename='img/' + bungalow.image_file) }}"
+        class="card-img-top"
+        alt="Bungalow1"
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ bungalow.name }}</h5>
+        <p class="card-text">{{ bungalow.content }}</p>
+        <p class="card-text">Prijs per week: €{{ bungalow.weekprice }}</p>
+        <a
+          href="{{ url_for('bookings.book_bungalow', bungalow_id=bungalow.id) }}"
+          class="btn btn-primary"
+          >Boek Nu!</a
+        >
       </div>
-  
-</body>
-</html>
-
- </body>
-
+    </div>
+  </div>
+  {% endfor %} {% for _ in range(9 - bungalows|length) %}
+  <div class="col-md-4 mb-4">
+    <div class="card">
+      <div
+        class="card-img-top"
+        style="height: 200px; background-color: #e9ecef"
+      ></div>
+      <div class="card-body">
+        <h5 class="card-title">&nbsp;</h5>
+        <p class="card-text">&nbsp;</p>
+        <p class="card-text">&nbsp;</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
