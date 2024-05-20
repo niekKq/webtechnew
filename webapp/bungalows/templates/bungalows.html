@@ -13,6 +13,11 @@
         <h5 class="card-title">{{ bungalow.name }}</h5>
         <p class="card-text">{{ bungalow.content }}</p>
         <p class="card-text">Prijs per week: €{{ bungalow.weekprice }}</p>
+        <a
+          href="{{ url_for('bookings.book_bungalow', bungalow_id=bungalow.id) }}"
+          class="btn btn-primary"
+          >Boek Nu!</a
+        >
       </div>
     </div>
   </div>

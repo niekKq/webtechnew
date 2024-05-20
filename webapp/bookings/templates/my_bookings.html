@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Mijn Boekingen{% endblock %} {% block
+main %}
+<div class="container mt-5">
+  <h2 class="mb-4">Mijn Boekingen</h2>
+  <ul class="list-group">
+    {% for booking in bookings %}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col">{{ booking.bungalow.name }}</div>
+        <div class="col">{{ booking.timeslot }}</div>
+        <div class="col">
+          <a
+            href="{{ url_for('bookings.update_booking', booking_id=booking.id) }}"
+            class="btn btn-primary"
+            >Aanpassen</a
+          >
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

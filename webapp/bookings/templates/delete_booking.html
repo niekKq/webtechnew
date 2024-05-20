@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Boeking verwijderen{% endblock %} {%
+block main %}
+<h1>Boeking verwijderen</h1>
+<p>Weet je zeker dat je deze boeking wilt verwijderen?</p>
+<form method="POST">
+  <input
+    type="submit"
+    value="Ja, verwijder deze boeking"
+    class="btn btn-danger"
+  />
+</form>
+{% endblock %}

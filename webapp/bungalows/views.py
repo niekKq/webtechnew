@@ -28,12 +28,20 @@ def admin():
     return render_template("admin.html")
 
 
+@bung.route("/bungalows")
+def bungalows():
+    bungalows = Bungalow.query.all()
+    print("Bungalows gevonden:", bungalows)
+    return render_template("bungalows.html", bungalows=bungalows)
+
+
 @bung.route("/admin/add_bungalow", methods=["GET", "POST"])
 def add_bungalow():
     form = BungalowForm()
     if form.validate_on_submit():
         image_file = get_random_image()
         bungalow = Bungalow(
+            user_id=current_user.id,  # Instelling van de user_id
             name=form.name.data,
             content=form.content.data,
             bungalow_type=form.bungalow_type.data,
