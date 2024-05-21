@@ -13,11 +13,17 @@
         <h5 class="card-title">{{ bungalow.name }}</h5>
         <p class="card-text">{{ bungalow.content }}</p>
         <p class="card-text">Prijs per week: €{{ bungalow.weekprice }}</p>
+        {% if current_user.is_authenticated %}
         <a
           href="{{ url_for('bookings.book_bungalow', bungalow_id=bungalow.id) }}"
           class="btn btn-primary"
           >Boek Nu!</a
         >
+        {% else %}
+        <a href="{{ url_for('auth.login') }}" class="btn btn-primary"
+          >Log in om te boeken</a
+        >
+        {% endif %}
       </div>
     </div>
   </div>

@@ -1,37 +1,12 @@
-{% extends "base.html" %} {% block title %}Boeking bijwerken{% endblock %} {%
-block main %}
-<h1>Boeking bijwerken</h1>
-<form method="POST">
-  <div class="mb-3">
-    <label for="start_date" class="form-label">Startdatum:</label>
-    <input
-      type="date"
-      id="start_date"
-      name="start_date"
-      class="form-control"
-      value="{{ booking.start_date }}"
-    />
+<!-- webapp/templates/update_booking.html -->
+{% extends "base.html" %} {% block content %}
+<h2>Boeking bijwerken</h2>
+<form method="POST" action="">
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+    {{ form.new_timeslot.label(class="form-control-label") }} {{
+    form.new_timeslot(class="form-control") }}
   </div>
-  <div class="mb-3">
-    <label for="end_date" class="form-label">Einddatum:</label>
-    <input
-      type="date"
-      id="end_date"
-      name="end_date"
-      class="form-control"
-      value="{{ booking.end_date }}"
-    />
-  </div>
-  <div class="mb-3">
-    <label for="guests" class="form-label">Aantal gasten:</label>
-    <input
-      type="number"
-      id="guests"
-      name="guests"
-      class="form-control"
-      value="{{ booking.guests }}"
-    />
-  </div>
-  <input type="submit" value="Bijwerken" class="btn btn-primary" />
+  <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
 </form>
 {% endblock %}

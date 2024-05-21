@@ -41,7 +41,6 @@ def add_bungalow():
     if form.validate_on_submit():
         image_file = get_random_image()
         bungalow = Bungalow(
-            user_id=current_user.id,  # Instelling van de user_id
             name=form.name.data,
             content=form.content.data,
             bungalow_type=form.bungalow_type.data,
@@ -51,7 +50,7 @@ def add_bungalow():
         db.session.add(bungalow)
         db.session.commit()
         flash("Bungalow succesvol toegevoegd!", "success")
-        return redirect(url_for("bung.admin"))
+        return redirect(url_for("bung.bungalows"))
     return render_template("add_bungalow.html", form=form)
 
 

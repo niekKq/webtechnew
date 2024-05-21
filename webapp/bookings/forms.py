@@ -1,19 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, IntegerField, TextAreaField, SubmitField
+from wtforms import DateField, SelectField, SubmitField
 from wtforms.validators import DataRequired
 
 
 class BookingForm(FlaskForm):
-    start_date = DateField("Startdatum", validators=[DataRequired()], format="%Y-%m-%d")
-    end_date = DateField("Einddatum", validators=[DataRequired()], format="%Y-%m-%d")
-    num_guests = IntegerField("Aantal gasten", validators=[DataRequired()])
-    comments = TextAreaField("Opmerkingen")
-    submit = SubmitField("Boeken")
+    start_date = DateField("Startdatum", format="%Y-%m-%d", validators=[DataRequired()])
+    end_date = DateField("Einddatum", format="%Y-%m-%d", validators=[DataRequired()])
+    submit = SubmitField("Boek")
 
 
 class UpdateBookingForm(FlaskForm):
-    start_date = DateField("Nieuwe startdatum", format="%Y-%m-%d")
-    end_date = DateField("Nieuwe einddatum", format="%Y-%m-%d")
-    num_guests = IntegerField("Nieuw aantal gasten")
-    comments = TextAreaField("Nieuwe opmerkingen")
+    new_timeslot = SelectField(
+        "Nieuw tijdslot", choices=[], validators=[DataRequired()]
+    )
     submit = SubmitField("Bijwerken")

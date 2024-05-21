@@ -19,7 +19,7 @@ from webapp.bookings.views import bookings
 
 app.register_blueprint(main)
 app.register_blueprint(bung)
-app.register_blueprint(bookings)
+app.register_blueprint(bookings, url_prefix="/bookings")
 
 
 @login_manager.user_loader
