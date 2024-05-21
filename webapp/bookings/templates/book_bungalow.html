@@ -1,21 +1,23 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block main %}
 <h2>Boek Bungalow</h2>
+
 <form method="POST">
   {{ form.hidden_tag() }}
   <div class="form-group">
-    {{ form.start_date.label(class="form-control-label") }} {{
-    form.start_date(class="form-control") }}
+    {{ form.start_date.label(class="form-control-label") }}
+    {{ form.start_date(class="form-control") }}
   </div>
   <div class="form-group">
-    {{ form.end_date.label(class="form-control-label") }} {{
-    form.end_date(class="form-control") }}
+    {{ form.end_date.label(class="form-control-label") }}
+    {{ form.end_date(class="form-control") }}
   </div>
   <div class="form-group">
-    {% if current_user.is_authenticated %} {{ form.submit(class="btn
-    btn-primary") }} {% else %}
-    <a href="{{ url_for('auth.login') }}" class="btn btn-primary"
-      >Log in om te boeken</a
-    >
+    {% if current_user.is_authenticated %}
+      {{ form.submit(class="btn btn-primary") }}
+    {% else %}
+      <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Log in om te boeken</a>
     {% endif %}
   </div>
 </form>
