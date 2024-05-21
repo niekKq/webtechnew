@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import DateField, SelectField, SubmitField
+from wtforms import DateField, HiddenField, SelectField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -14,3 +14,10 @@ class UpdateBookingForm(FlaskForm):
         "Nieuw tijdslot", choices=[], validators=[DataRequired()]
     )
     submit = SubmitField("Bijwerken")
+
+class DeleteBookingForm(FlaskForm):
+    # Verborgen veld om het boekings-ID door te geven
+    booking_id = HiddenField()
+
+    # Knop om de boeking te verwijderen
+    submit = SubmitField("Verwijderen")

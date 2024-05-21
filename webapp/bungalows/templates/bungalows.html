@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block main %}
+{% extends "base.html" %}
+
+{% block main %}
 <h1>Alle Bungalows</h1>
 <div class="row">
   {% for bungalow in bungalows %}
@@ -20,14 +22,15 @@
           >Boek Nu!</a
         >
         {% else %}
-        <a href="{{ url_for('auth.login') }}" class="btn btn-primary"
+        <a href="{{ url_for('main.login') }}" class="btn btn-primary"
           >Log in om te boeken</a
         >
         {% endif %}
       </div>
     </div>
   </div>
-  {% endfor %} {% for _ in range(9 - bungalows|length) %}
+  {% endfor %}
+  {% for _ in range(9 - bungalows|length) %}
   <div class="col-md-4 mb-4">
     <div class="card">
       <div
