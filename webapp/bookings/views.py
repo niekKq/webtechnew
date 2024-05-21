@@ -56,7 +56,18 @@ def delete_booking(booking_id):
     if booking.user_id != current_user.id:
         abort(403)
 
+    # Verwijder de boeking
     db.session.delete(booking)
+
+    # Markeer de tijdsleuf als beschikbaar in de BungalowAvailability
+    availability = BungalowAvailability.query.filter_by(
+        bungalow_id=booking.bungalow_id,
+        timeslot=booking.start_date  # Je moet de startdatum gebruiken als timeslot
+    ).first()
+
+    if availability:
+        availability.available = True
+
     db.session.commit()
 
     flash(f"Je boeking voor {bungalow_name} is succesvol verwijderd!", 'success')
@@ -66,35 +77,29 @@ def delete_booking(booking_id):
 
 
 
-
 @bookings.route("/book_bungalow/<int:bungalow_id>", methods=["GET", "POST"])
 @login_required
 def book_bungalow(bungalow_id):
     bungalow = Bungalow.query.get_or_404(bungalow_id)
-    
-    # Debug: Print bungalow data
-    print(f"Debug: Found bungalow - ID: {bungalow.id}, Name: {bungalow.name}, Week Price: {bungalow.weekprice}")
 
     form = BookingForm()
     if form.validate_on_submit():
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        # Debug: Print form data
-        print(f"Debug: Start Date: {start_date}, End Date: {end_date}")
-
         # Controleer of de geselecteerde periode beschikbaar is
-        booked_timeslots = [
-            booking.timeslot
-            for booking in bungalow.bookings
-            if booking.timeslot >= start_date and booking.timeslot <= end_date
-        ]
+        booked_timeslot = next(
+            (booking for booking in bungalow.bookings 
+             if not (booking.end_date < start_date or booking.start_date > end_date)), 
+            None
+        )
 
-        # Debug: Print booked timeslots
-        print(f"Debug: Booked Timeslots: {booked_timeslots}")
-
-        if booked_timeslots:
-            flash("Dit tijdvak is niet beschikbaar. Kies een andere tijdvak.", "danger")
+        if booked_timeslot:
+            flash(
+                f"Dit tijdvak is niet beschikbaar. Kies een andere tijdvak.\n "
+                f"Dit tijdvlak is al bezet: {booked_timeslot.start_date} tot {booked_timeslot.end_date}.", 
+                "danger"
+            )
             return redirect(url_for("bookings.book_bungalow", bungalow_id=bungalow_id))
 
         # Voeg nieuwe boeking toe
@@ -111,3 +116,4 @@ def book_bungalow(bungalow_id):
         return redirect(url_for("bookings.my_bookings"))
 
     return render_template("book_bungalow.html", bungalow=bungalow, form=form)
+
