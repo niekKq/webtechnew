@@ -6,6 +6,9 @@ from werkzeug.security import generate_password_hash
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "123"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LekWOUpAAAAAFbyLqbQvfV7Xw98wxRAcc2RDzzE'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LekWOUpAAAAAPzuUhXki0_6ISVUImgEETZi2r9k'
+
 
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)

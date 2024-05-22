@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileF
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email, EmailNotValidError
+from flask_wtf import RecaptchaField
 
 
 class RegistrationForm(FlaskForm):
@@ -13,6 +14,7 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
     )
+    recaptcha = RecaptchaField()  
     submit = SubmitField("Sign Up")
 
     def validate_email_address(self, field):

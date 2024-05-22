@@ -24,6 +24,30 @@
     .card:hover {
       transform: scale(1.05);
     }
+
+    .register-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-container .form-control:focus {
+      box-shadow: none;
+      border-color: #28a745;
+    }
+
+    .register-container .btn-primary {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .register-container .btn-primary:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
   </style>
 </head>
 <body>
@@ -91,18 +115,18 @@
 
   <div class="container mt-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
     {% endwith %}
   </div>
 
-  <div class="container mt-5">{% block main %}inhoud{% endblock %}</div>
+  <div class="container mt-5">
+    {% block main %}{% endblock %}
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
