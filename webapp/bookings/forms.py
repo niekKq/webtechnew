@@ -10,10 +10,9 @@ class BookingForm(FlaskForm):
 
 
 class UpdateBookingForm(FlaskForm):
-    new_timeslot = SelectField(
-        "Nieuw tijdslot", choices=[], validators=[DataRequired()]
-    )
-    submit = SubmitField("Bijwerken")
+    new_start = DateField('Nieuwe tijdslot',format="%Y-%m-%d" , validators=[DataRequired()])
+    new_end = DateField('Nieuwe einddatum',format="%Y-%m-%d" , validators=[DataRequired()])
+    submit = SubmitField('Bijwerken')
 
 class DeleteBookingForm(FlaskForm):
     # Verborgen veld om het boekings-ID door te geven

@@ -19,24 +19,18 @@ def my_bookings():
 def update_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
     form = UpdateBookingForm()
-    availability = BungalowAvailability.query.filter_by(
-        bungalow_id=booking.bungalow_id
-    ).first()
-    if availability:
-        form.new_timeslot.choices = [
-            (timeslot, timeslot) for timeslot in availability.available_timeslots
-        ]
-
+    
     if form.validate_on_submit():
-        new_timeslot = form.new_timeslot.data
-        if new_timeslot not in availability.available_timeslots:
-            flash("Dit tijdvak is niet beschikbaar. Kies een andere tijdvak.", "danger")
+        new_start = form.new_start.data
+        new_end = form.new_end.data
+        
+        if new_end < new_start:
+            flash("De einddatum moet na de startdatum liggen.", "danger")
             return redirect(url_for("bookings.update_booking", booking_id=booking.id))
 
-        availability.release_timeslot(booking.timeslot)
-        availability.book_timeslot(new_timeslot)
-
-        booking.timeslot = new_timeslot
+        # Update both start and end dates in the database
+        booking.start_date = new_start
+        booking.end_date = new_end
         db.session.commit()
 
         flash("Boeking succesvol bijgewerkt!", "success")

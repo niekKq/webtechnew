@@ -1,11 +1,16 @@
-<!-- webapp/templates/update_booking.html -->
-{% extends "base.html" %} {% block main %}
+{% extends "base.html" %}
+
+{% block main %}
 <h2>Boeking bijwerken</h2>
 <form method="POST" action="">
   {{ form.hidden_tag() }}
   <div class="form-group">
-    {{ form.new_timeslot.label(class="form-control-label") }} {{
-    form.new_timeslot(class="form-control") }}
+    {{ form.new_start.label(class="form-control-label") }}
+    {{ form.new_start(class="form-control", type="date") }}
+  </div>
+  <div class="form-group">
+    {{ form.new_end.label(class="form-control-label") }}
+    {{ form.new_end(class="form-control", type="date") }}
   </div>
   <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
 </form>
