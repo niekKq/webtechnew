@@ -11,18 +11,15 @@ import os
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from webapp.main.forms import AccountForm, LoginForm, RegistrationForm
-from webapp.bungalows.forms import BungalowForm
-from webapp.models import User, Bungalow
+from webapp.models import User
 from webapp import db
 from email_validator import validate_email, EmailNotValidError
-
 
 main = Blueprint(
     "main",
     __name__,
     template_folder=os.path.join(os.path.dirname(__file__), "templates"),
 )
-
 
 @main.route("/logout")
 def logout():
@@ -31,7 +28,6 @@ def logout():
     logout_user()
     flash("Je bent uitgelogd", "success")
     return redirect(url_for("main.home"))
-
 
 @main.route("/register", methods=["GET", "POST"])
 def register():
@@ -76,8 +72,7 @@ def register():
 
     return render_template("register.html", title="Registreren", form=form)
 
-
-@main.route("/login", methods=["GET", "POST"])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -89,12 +84,8 @@ def login():
             flash("Login succesvol!", "success")
             return redirect(url_for("main.home"))
         else:
-            flash(
-                "Onjuiste gebruikersnaam of wachtwoord. Probeer het opnieuw.", "danger"
-            )
-            return redirect(url_for("main.login"))
-    return render_template("login.html", form=form)
-
+            flash("Onjuiste gebruikersnaam of wachtwoord", "danger")
+    return render_template('login.html', form=form)
 
 @main.route("/account", methods=["GET", "POST"])
 @login_required
@@ -124,18 +115,13 @@ def account():
         form.email.data = current_user.email
     return render_template("account.html", form=form, Succesvol=Succesvol)
 
-
 @main.route("/")
 def home():
     Succesvol = session.pop("Succesvol", False)
     return render_template("home.html", Succesvol=Succesvol)
-
 
 @main.route("/about")
 def about():
     if "_flashes" in session:
         session["_flashes"].clear()
     return render_template("about.html")
-
-
-####################################################################################

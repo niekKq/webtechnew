@@ -5,6 +5,7 @@ from webapp.bungalows.forms import BungalowForm
 from webapp.models import Bungalow
 import os
 import random
+from decorators import admin_required
 
 bung = Blueprint("bung", __name__, template_folder="templates")
 
@@ -22,6 +23,7 @@ def get_random_image():
 
 
 @bung.route("/admin", methods=["GET", "POST"])
+@admin_required
 def admin():
     if "_flashes" in session:
         session["_flashes"].clear()
@@ -36,6 +38,7 @@ def bungalows():
 
 
 @bung.route("/admin/add_bungalow", methods=["GET", "POST"])
+@admin_required
 def add_bungalow():
     form = BungalowForm()
     if form.validate_on_submit():
@@ -55,12 +58,14 @@ def add_bungalow():
 
 
 @bung.route("/admin/edit_bungalow", methods=["GET", "POST"])
+@admin_required
 def edit_view():
     bungalows = Bungalow.query.all()
     return render_template("edit_bungalow.html", bungalows=bungalows)
 
 
 @bung.route("/admin/edit/<int:bungalow_id>", methods=["GET", "POST"])
+@admin_required
 def edit_bungalow(bungalow_id):
     bungalow = Bungalow.query.get_or_404(bungalow_id)
     form = BungalowForm(obj=bungalow)
@@ -73,6 +78,7 @@ def edit_bungalow(bungalow_id):
 
 
 @bung.route("/admin/delete/<int:bungalow_id>", methods=["GET", "POST"])
+@admin_required
 def delete_bungalow(bungalow_id):
     bungalow = Bungalow.query.get_or_404(bungalow_id)
     db.session.delete(bungalow)
