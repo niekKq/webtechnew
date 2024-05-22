@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from flask_login import UserMixin
 from webapp import db
 from sqlalchemy.orm import relationship
+from werkzeug.security import check_password_hash
 
 
 class User(UserMixin, db.Model):
@@ -14,7 +15,7 @@ class User(UserMixin, db.Model):
     bookings = relationship("Booking", back_populates="user")
 
     def check_password(self, password):
-        return bcrypt.check_password_hash(self.password, password)
+        return check_password_hash(self.password, password)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', 'Admin={self.is_admin}'))"

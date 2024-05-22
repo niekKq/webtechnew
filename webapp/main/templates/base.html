@@ -4,8 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}de titel{% endblock %}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}" />
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <!-- Custom CSS Files -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}" />
+
   <style>
     .navbar-nav .nav-link:hover {
       color: #dad97f;
@@ -17,6 +23,30 @@
 
     .card:hover {
       transform: scale(1.05);
+    }
+
+    .register-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f8f9fa;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-container .form-control:focus {
+      box-shadow: none;
+      border-color: #28a745;
+    }
+
+    .register-container .btn-primary {
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    .register-container .btn-primary:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
     }
   </style>
 </head>
@@ -48,6 +78,8 @@
           </li>
           {% endif %}
         </ul>
+        
+        <div class="navbar-text me-3">Huidige gebruiker: {{ current_user.username }}</div>
         <a class="nav-link" href="{{ url_for('main.logout') }}">
           <button class="btn btn-outline-success">Uitloggen</button>
         </a>
@@ -81,8 +113,20 @@
   </nav>
   {% endif %}
 
-  <div class="container mt-5">{% block main %}inhoud{% endblock %}</div>
+  <div class="container mt-5">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+  <div class="container mt-5">
+    {% block main %}{% endblock %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
