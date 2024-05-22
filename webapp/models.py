@@ -1,7 +1,7 @@
 # webapp/models.py
 from datetime import datetime, timedelta
 from flask_login import UserMixin
-from webapp import db, bcrypt
+from webapp import db
 from sqlalchemy.orm import relationship
 
 
@@ -10,13 +10,14 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False)
     bookings = relationship("Booking", back_populates="user")
 
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}')"
+        return f"User('{self.username}', '{self.email}', 'Admin={self.is_admin}'))"
 
 
 class Bungalow(db.Model):
