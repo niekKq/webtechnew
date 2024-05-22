@@ -46,7 +46,6 @@ def init_admin():
         else:
             print(f"Admin user already exists with email '{admin_email}'")
 
-# Voer db.create_all() uit om de database te maken
 with app.app_context():
     db.create_all()
     init_admin()
