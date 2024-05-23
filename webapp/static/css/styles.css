@@ -1,6 +1,7 @@
 .Vakantietitel {
   color: red;
 }
+
 .dark-mode {
   background-color: #1a1a1a;
   color: #ffffff;
@@ -73,6 +74,12 @@
   padding: 20px;
   text-align: center;
   background-color: #f9f9f9;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.bungalow-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .bungalow-card img {
@@ -83,7 +90,114 @@
 
 .placeholder-image {
   width: 100%;
-  padding-bottom: 75%; /* 4:3 aspect ratio */
-  background-color: #e0e0e0;
+  height: 200px;
+  background-color: #e9ecef;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 4px;
+}
+
+.placeholder-text {
+  color: #6c757d;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #dad97f;
+}
+
+.card {
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.register-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-container .form-control:focus {
+  box-shadow: none;
+  border-color: #28a745;
+}
+
+.register-container .btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.register-container .btn-primary:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px 0;
+}
+
+.footer a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3); /* Optional: to darken the video for better text visibility */
+}
+
+.video-overlay h1,
+.video-overlay p {
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.video-overlay h1 {
+  font-size: 3rem;
+}
+
+.video-overlay p {
+  font-size: 1.5rem;
 }
