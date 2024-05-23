@@ -32,7 +32,7 @@ def init_admin():
     with app.app_context():
         admin_email = 'admin@gmail.com'
         admin_username = 'admin'
-        admin_password = 'adminpassword'
+        admin_password = 'admin'
 
         # Check if admin user already exists
         admin = User.query.filter_by(email=admin_email).first()
