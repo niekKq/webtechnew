@@ -1,5 +1,4 @@
-from flask import render_template, session, url_for, flash, redirect, Blueprint, request
-from flask_login import login_required, current_user
+from flask import render_template, session, url_for, flash, redirect, Blueprint
 from webapp import db
 from webapp.bungalows.forms import BungalowForm
 from webapp.models import Bungalow

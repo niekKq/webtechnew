@@ -1,8 +1,6 @@
-from typing import Optional
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, FileField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from email_validator import validate_email, EmailNotValidError
 from flask_wtf import RecaptchaField
 

@@ -15,8 +15,5 @@ class UpdateBookingForm(FlaskForm):
     submit = SubmitField('Bijwerken')
 
 class DeleteBookingForm(FlaskForm):
-    # Verborgen veld om het boekings-ID door te geven
     booking_id = HiddenField()
-
-    # Knop om de boeking te verwijderen
     submit = SubmitField("Verwijderen")

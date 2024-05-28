@@ -8,7 +8,7 @@ class BungalowForm(FlaskForm):
     content = TextAreaField("Content", validators=[DataRequired()])
     bungalow_type = SelectField(
         "Type",
-        choices=[("Type1", "Type1"), ("Type2", "Type2")],
+        choices=[("4 persoons", "4 persoons"), ("6 persoons", "6 persoons"), ("8 persoons", "8 persoons")],
         validators=[DataRequired()],
     )
     weekprice = DecimalField("Week Price", validators=[DataRequired()])

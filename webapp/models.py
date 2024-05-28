@@ -27,7 +27,7 @@ class Bungalow(db.Model):
     content = db.Column(db.Text, nullable=False)
     bungalow_type = db.Column(db.String(100), nullable=False)
     weekprice = db.Column(db.Float, nullable=False)
-    image_file = db.Column(db.String(100), nullable=True, default="default.jpg")
+    image_file = db.Column(db.String(100), nullable=True, default="bungalow1.jpg")
 
     bookings = relationship("Booking", backref="bungalow", lazy=True)
 
@@ -47,8 +47,6 @@ class Bungalow(db.Model):
     def __repr__(self):
         return f"Bungalow('{self.name}', '{self.bungalow_type}', '{self.weekprice}', '{self.image_file}')"
 
-
-# webapp/models.py
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     bungalow_id = db.Column(db.Integer, db.ForeignKey("bungalow.id"), nullable=False)
@@ -59,7 +57,6 @@ class Booking(db.Model):
 
     def __repr__(self):
         return f"<Booking {self.id}>"
-
 
 class BungalowAvailability(db.Model):
     id = db.Column(db.Integer, primary_key=True)
