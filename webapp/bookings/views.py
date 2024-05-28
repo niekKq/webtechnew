@@ -29,7 +29,6 @@ def update_booking(booking_id):
             flash("De einddatum moet na de startdatum liggen.", "danger")
             return redirect(url_for("bookings.update_booking", booking_id=booking.id))
 
-        # Update both start and end dates in the database
         booking.start_date = new_start
         booking.end_date = new_end
         db.session.commit()
@@ -44,20 +43,16 @@ def update_booking(booking_id):
 @login_required
 def delete_booking(booking_id):
     booking = Booking.query.get_or_404(booking_id)
-
-    # Opslaan van de bungalownaam voordat de boeking wordt verwijderd
     bungalow_name = booking.bungalow.name
 
     if booking.user_id != current_user.id:
         abort(403)
 
-    # Verwijder de boeking
     db.session.delete(booking)
 
-    # Markeer de tijdsleuf als beschikbaar in de BungalowAvailability
     availability = BungalowAvailability.query.filter_by(
         bungalow_id=booking.bungalow_id,
-        timeslot=booking.start_date  # Je moet de startdatum gebruiken als timeslot
+        timeslot=booking.start_date
     ).first()
 
     if availability:
@@ -67,9 +62,6 @@ def delete_booking(booking_id):
 
     flash(f"Je boeking voor {bungalow_name} is succesvol verwijderd!", 'success')
     return redirect(url_for('bookings.my_bookings'))
-
-
-
 
 
 @bookings.route("/book_bungalow/<int:bungalow_id>", methods=["GET", "POST"])
@@ -82,7 +74,6 @@ def book_bungalow(bungalow_id):
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        # Controleer of de geselecteerde periode beschikbaar is
         booked_timeslot = next(
             (booking for booking in bungalow.bookings 
              if not (booking.end_date < start_date or booking.start_date > end_date)), 
@@ -103,7 +94,6 @@ def book_bungalow(bungalow_id):
             )
             return redirect(url_for("bookings.book_bungalow", bungalow_id=bungalow_id))
 
-        # Voeg nieuwe boeking toe
         booking = Booking(
             bungalow_id=bungalow.id,
             start_date=start_date,

@@ -34,7 +34,6 @@ def init_admin():
         admin_username = 'admin'
         admin_password = 'admin'
 
-        # Check if admin user already exists
         admin = User.query.filter_by(email=admin_email).first()
         if admin is None:
             admin = User(
