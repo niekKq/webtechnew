@@ -3,6 +3,7 @@ from webapp.models import Bungalow, Booking, BungalowAvailability
 from webapp import db
 from webapp.bookings.forms import BookingForm, DeleteBookingForm, UpdateBookingForm
 from flask_login import current_user, login_required
+from datetime import timedelta
 
 bookings = Blueprint("bookings", __name__, template_folder="templates")
 
@@ -87,6 +88,12 @@ def book_bungalow(bungalow_id):
              if not (booking.end_date < start_date or booking.start_date > end_date)), 
             None
         )
+        bungalow.max_days = 7
+
+        if end_date - start_date > timedelta(days=bungalow.max_days):
+
+            flash(f"De minimale boekingsperiode is {bungalow.max_days} dagen.", "danger")
+            return redirect(url_for("bookings.book_bungalow", bungalow_id=bungalow_id))
 
         if booked_timeslot:
             flash(
